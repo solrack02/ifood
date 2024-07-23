@@ -3,7 +3,7 @@ on: [push]
 
 jobs:
   easUpdate:
-    name: EAS Update
+    name: EAS Tests
     runs-on: ubuntu-latest
     if: contains(github.event.head_commit.message, 'github actions - gen update')
 
@@ -11,20 +11,6 @@ jobs:
       - name: Checkout repository
         id: get_repo
         uses: actions/checkout@v3
-
-      - name: Read README.md(gh-pages)
-        id: ghpages
-        uses: jaywcjlove/github-action-read-file@main
-        with:
-          branch: master
-          path: ids.json
-      
-      - name: Echo README.md(gh-pages)
-        run: echo "${{ fromJson(steps.ghpages.outputs.content).userID }}"
-        # env:
-        #   BASE_HOST: 'https://5001-morfosdev-flaxboll-0v4gqvdn5sb.ws-us106.gitpod.io/flaxboll/us-central1/fireUserUpdateQr'
-        #   userID: "${{ fromJson(steps.ghpages.outputs.content).userID }}"
-        #   projectID: "${{ fromJson(steps.ghpages.outputs.content).projectID }}"
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -42,16 +28,20 @@ jobs:
         run: yarn install
 
       - name: Create preview
-        id: preview
+        id: initcmd
         uses: expo/expo-github-action/preview@v8
         with:
-          command: eas update --auto
+          command: eas init --auto
           
-      - name: Set Qr Code
+      - name: Show Response
         run: |
-          curl --location --request GET 'https://5001-morfosdev-flaxboll-0v4gqvdn5sb.ws-us106.gitpod.io/flaxboll/us-central1/fireUserUpdateQr' \
-          --header 'Content-Type: text/plain' \
-          --data '{"qrcodeUrl":"${{steps.preview.outputs.qr}}","userID":"${{ fromJson(steps.ghpages.outputs.content).userID }}","projectID":"${{ fromJson(steps.ghpages.outputs.content).projectID }}"}'
+           echo ${{ steps.initcmd.outputs }}
+          
+      # - name: Set Qr Code
+      #   run: |
+      #     curl --location --request GET 'https://5001-morfosdev-flaxboll-0v4gqvdn5sb.ws-us106.gitpod.io/flaxboll/us-central1/fireUserUpdateQr' \
+      #     --header 'Content-Type: text/plain' \
+      #     --data '{"qrcodeUrl":"${{steps.preview.outputs.qr}}","userID":"${{ fromJson(steps.ghpages.outputs.content).userID }}","projectID":"${{ fromJson(steps.ghpages.outputs.content).projectID }}"}'
 
 #       - name: Update latest version in realtime database
 #         id: firestore
@@ -63,7 +53,7 @@ jobs:
 #           path: github
 #           doc: qGjG0ZpnktK5sSkxet3n
 #           value: ${{ secrets.OBJ_FIRE }}
-          # value: ${{ toJSON('{"name":"jsdaniell", "password":"mypass"}') }}
+# value: ${{ toJSON('{"name":"jsdaniell", "password":"mypass"}') }}
           
 # - name: Show Error1
 #   run: 
