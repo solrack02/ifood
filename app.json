@@ -1,42 +1,34 @@
 {
   "expo": {
-    "name": "startmorfos",
-    "slug": "startmorfos",
-    "scheme": "returnsite",
-    "version": "1.0.0",
+    "name": "carlos2",
+    "slug": "carlos2",
+    "version": "0.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "plugins": [["@react-native-google-signin/google-signin"]],
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
     },
-    "extra": {
-      "eas": {
-        "projectId": "491f859e-1eb1-4af9-8877-a26feeb1c58e"
-      }
+    "experiments": {
+      "typedRoutes": true
     },
-    "owner": "morfos",
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/491f859e-1eb1-4af9-8877-a26feeb1c58e"
-    }
+    "plugins": ["expo-router"]
   }
 }
